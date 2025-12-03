@@ -1,10 +1,9 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from random import random
 from django.http import HttpResponse
 from app_datetime.views import datetime_view, dynamic_datetime_view
 from app_weather.views import weather_view
-from app_store.views import product_view_json, shop_view
 
 
 def random_view(request):
@@ -19,10 +18,10 @@ def dynamic_random_view(request):
             <script>
                 function updateNumber() {
                     let randomNum = Math.random();
-                    document.getElementById("random").innerText = randomNum; // Заменяем предыдущее значение на новое в блоке с id="random"
+                    document.getElementById("random").innerText = randomNum;
                 }
-                setInterval(updateNumber, 1000); // Запускаем обновление каждую секунду
-                window.onload = updateNumber; // Генерируем первое число при загрузке
+                setInterval(updateNumber, 1000);
+                window.onload = updateNumber;
             </script>
             <body>
                 <h1>Случайное число: <span id="random">Загрузка...</span></h1>
@@ -38,6 +37,5 @@ urlpatterns = [
     path('datetime/', datetime_view),
     path('dynamic_datetime/', dynamic_datetime_view),
     path('weather/', weather_view),
-    path('product/', product_view_json),
-    path('', shop_view),
+    path('', include('app_store.urls')),
 ]
