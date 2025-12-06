@@ -1,6 +1,12 @@
+import os
+from django.conf import settings
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from logic.control_cart import view_in_cart
+from logic.control_wishlist import view_in_wishlist
+
+
+PATH_WISHLIST = os.path.join(settings.BASE_DIR, 'wishlist.json')
 
 
 def login_view(request):
@@ -14,20 +20,20 @@ def login_view(request):
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            login(request, user)  # Авторизация пользователя
+            login(request, user)
 
-            # Создание/загрузка корзины для текущего пользователя
-            from django.contrib.auth import get_user
-            user = get_user(request)
-            view_in_cart(user.username)  # Получаем корзину, если её нет, создаем пустую
+            # Создание/загрузка корзины
+            view_in_cart(user.username)
 
-            return redirect('app_store:shop_view')  # Редирект на стартовую страницу
+            # Создание/загрузка избранного
+            view_in_wishlist(user.username)
 
-        # Если авторизация не удалась
+            return redirect('app_store:shop_view')
+
         return render(request, "login/login.html", context={"error": "Неверные данные"})
 
 
 def logout_view(request):
     if request.method == "GET":
-        logout(request)  # Разлогиниваем пользователя
-        return redirect('app_store:shop_view')  # Редирект на стартовую страницу
+        logout(request)
+        return redirect('app_store:shop_view')

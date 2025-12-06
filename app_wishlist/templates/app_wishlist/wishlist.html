@@ -1,0 +1,75 @@
+{% extends 'app_store/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Избранное</title>
+{% endblock %}
+
+{% block content %}
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'app_store/images/bg_1.jpg' %});">
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-center justify-content-center">
+      <div class="col-md-9 ftco-animate text-center">
+        <p class="breadcrumbs"><span class="mr-2"></span></p>
+        <h1 class="mb-0 bread">Избранное</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="ftco-section ftco-cart">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 ftco-animate">
+        <div class="cart-list">
+          <table class="table">
+            <thead class="thead-primary">
+              <tr class="text-center">
+                <th></th>
+                <th></th>
+                <th>Продукт</th>
+                <th>Цена, &#x20bd</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in products %}
+              <tr class="text-center">
+                <!-- Удаления через redirect -->
+                <td class="product-remove">
+                  <a href="{% url 'app_wishlist:wishlist_remove_view' product.id %}">
+                    <span class="ion-ios-close"></span>
+                  </a>
+                </td>
+                <!-- Изображение продукта с ссылкой на страницу товара -->
+                <td class="image-prod">
+                  <a href="{% url 'app_store:product_page_view' product.id %}">
+                    <div class="img" style="background-image: url({% static product.url %});"></div>
+                  </a>
+                </td>
+                <!-- Название и описание -->
+                <td class="product-name">
+                  <h3>{{ product.name }}</h3>
+                  <p>{{ product.description }}</p>
+                </td>
+                 <!-- Цена -->
+                <td class="price">
+                  {% if product.discount %}
+                  <del>{{ product.price_before }} ₽</del> {{ product.price_after }} ₽
+                  {% else %}
+                  {{ product.price_before }} ₽
+                  {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block custom_scripts %}
+<script src="{% static 'app_store/js/appAddToWishlist.js' %}"></script>
+{% endblock %}

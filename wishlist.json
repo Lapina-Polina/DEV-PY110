@@ -1,0 +1,46 @@
+{
+    "admin": {
+        "products": [
+            "1",
+            "2",
+            "4"
+        ]
+    },
+    "1": {
+        "products": [
+            "admin"
+        ]
+    },
+    "2": {
+        "products": [
+            "admin"
+        ]
+    },
+    "3": {
+        "products": [
+            "admin"
+        ]
+    },
+    "5": {
+        "products": [
+            "admin"
+        ]
+    },
+    "6": {
+        "products": [
+            "admin"
+        ]
+    },
+    "admin1": {
+        "products": [
+            "1",
+            "5"
+        ]
+    },
+    "test": {
+        "products": [
+            "9",
+            "5"
+        ]
+    }
+}

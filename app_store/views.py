@@ -30,7 +30,6 @@ def product_view_json(request):
         return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 4})
 
 
-@login_required(login_url='app_login:login_view')
 def shop_view(request):
     if request.method == "GET":
         # Обработка фильтрации из параметров запроса
